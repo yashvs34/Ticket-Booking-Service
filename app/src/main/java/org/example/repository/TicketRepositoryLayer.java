@@ -14,15 +14,16 @@ public class TicketRepositoryLayer {
 
     }
 
-    public List<User> getAllTicketsFromDB() {
-
-    }
-
-    public User getTicketFromDB(String ticketId) {
-
-    }
+//    public List<User> getAllTicketsFromDB() {
+//
+//    }
+//
+//    public User getTicketFromDB(String ticketId) {
+//
+//    }
 
     public boolean updateTicket(Ticket ticket) {
         // only boarding station can be changed
+        return false;
     }
 }
