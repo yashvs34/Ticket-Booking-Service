@@ -1,0 +1,27 @@
+name: PR Check
+
+# This tells GitHub to run this script whenever a PR is opened against main
+on:
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-and-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17' # Java version
+          distribution: 'temurin'
+
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
+
+      - name: Run Build and Checkstyle
+        # The 'build' task automatically runs Checkstyle, compiles code, and runs tests
+        run: ./gradlew build
