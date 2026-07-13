@@ -54,46 +54,15 @@ public class UserBookingService {
     }
 
     public void fetchBookings() {
-        List<Ticket> tickets = user.getBookedTickets();
+        List<String> tickets = user.getBookedTickets();
         System.out.println(tickets);
     }
 
-    public boolean cancelBooking(String ticketId) {
-        List<Ticket> tickets = user.getBookedTickets();
-        List<Ticket> updatedTickets = tickets.stream().filter(ticket -> !Objects.equals(ticket.getTicketId(), ticketId)).toList();
-        user.setBookedTickets(updatedTickets);
-        List<User> updatedUserList = userList.stream().filter(user1 -> user1.getUserId().equals(user.getUserId())).toList();
-        updatedUserList.add(user);
-        File usersList = new File(USERS_PATH);
-        try {
-            objectMapper.writeValue(usersList, updatedUserList);
-        } catch (IOException e) {
-            return false;
-        }
-
-        Optional<Ticket> t = tickets.stream().filter(ticket -> Objects.equals(ticket.getTicketId(), ticketId)).findFirst();
-        if (t.isEmpty()) {
-            return false;
-        }
-        Train train = t.get().getTrain();
-        List<List<Boolean>> seats = train.getSeats();
-
-        for (List<Boolean> seat : seats) {
-            for (int j = 0; j < seat.size(); j++) {
-                if (seat.get(j)) {
-                    seat.set(j, false);
-                    return true;
-                }
-            }
-        }
-        train.setSeats(seats);
-        File trainList = new File(TRAINS_PATH);
-        objectMapper.writeValue(trainList, );
-
-        return false;
-    }
-
-    public boolean bookTicket(String source, String destination, String trainId) {
-
-    }
+//    public boolean cancelBooking(String ticketId) {
+//
+//    }
+//
+//    public boolean bookTicket(String source, String destination, String trainId) {
+//
+//    }
 }
