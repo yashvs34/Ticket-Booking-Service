@@ -1,0 +1,33 @@
+[
+  {
+    "trainId": "train1",
+    "trainNumber": "0001",
+    "seats": [
+      [false, false, false, false, false],
+      [false, false, false, false, false],
+      [false, false, true, true, true]
+    ],
+    "stationTimes": {
+      "BAL": "2026-12-08T19:30:00Z",
+      "BSB": "2026-12-08T18:30:00Z",
+      "CPR": "2026-12-08T20:30:00Z"
+    },
+    "stations": ["BSB", "BAL", "CPR"]
+  },
+  {
+    "trainId": "train2",
+    "trainNumber": "0002",
+    "seats": [
+      [false, false, true, false, false],
+      [[true, false, false, true, false]],
+      [[true, false, false, false, true]]
+    ],
+    "stationTimes": {
+      "ARA": "2026-12-21T16:30:00Z",
+      "BNRS": "2026-12-21T13:30:00Z",
+      "DDU": "2026-12-21T14:30:00Z",
+      "PNBE": "2026-12-21T18:30:00Z"
+    },
+    "stations": ["BNRS", "DDU", "ARA", "PNBE"]
+  }
+]

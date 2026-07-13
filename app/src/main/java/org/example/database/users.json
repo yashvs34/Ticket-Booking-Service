@@ -1,0 +1,7 @@
+[{
+  "userId": "yashvvs",
+  "name": "Yashvardhan Singh",
+  "password": "abc123",
+  "isAdmin": false,
+  "bookedTickets": ["ticket1", "ticket2"]
+}]

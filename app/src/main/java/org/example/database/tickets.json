@@ -1,0 +1,18 @@
+[
+  {
+    "ticketId": "ticket1",
+    "userId": "yashvvs",
+    "source": "BSB",
+    "destination": "CPR",
+    "dateOfTravel": "2026-12-08T18:30:00Z",
+    "trainId": "train1"
+  },
+  {
+    "ticketId": "ticket2",
+    "userId": "yashvvs",
+    "source": "BNRS",
+    "destination": "PNBE",
+    "dateOfTravel": "2026-12-21T18:30:00Z",
+    "trainId": "train2"
+  }
+]
