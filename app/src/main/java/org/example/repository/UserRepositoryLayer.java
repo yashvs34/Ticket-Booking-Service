@@ -3,8 +3,6 @@ package org.example.repository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.example.entities.User;
 
-import java.util.List;
-
 public class UserRepositoryLayer {
     private final ObjectMapper objectMapper = new ObjectMapper();
 

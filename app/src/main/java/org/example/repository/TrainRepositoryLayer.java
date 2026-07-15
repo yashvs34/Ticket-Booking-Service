@@ -2,9 +2,6 @@ package org.example.repository;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.example.entities.Train;
-import org.example.entities.User;
-
-import java.util.List;
 
 public class TrainRepositoryLayer {
     private final ObjectMapper objectMapper = new ObjectMapper();
