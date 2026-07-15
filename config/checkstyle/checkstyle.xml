@@ -9,6 +9,9 @@
         <property name="max" value="120"/>
     </module>
 
+    <!-- Ensures the file ends with a blank line -->
+    <module name="NewlineAtEndOfFile"/>
+
     <module name="TreeWalker">
         <!-- Checks for unused imports -->
         <module name="UnusedImports"/>
@@ -21,9 +24,6 @@
 
         <!-- Enforces standard indentation -->
         <module name="Indentation"/>
-
-        <!-- Ensures the file ends with a blank line -->
-        <module name="NewlineAtEndOfFile"/>
 
     </module>
 </module>

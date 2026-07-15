@@ -10,7 +10,12 @@ public class Ticket {
     private Date dateOfTravel;
     private String trainId;
 
-    public Ticket(String ticketId, String userId, String source, String destination, Date dateOfTravel, String trainId) {
+    public Ticket(String ticketId,
+                  String userId,
+                  String source,
+                  String destination,
+                  Date dateOfTravel,
+                  String trainId) {
         this.ticketId = ticketId;
         this.userId = userId;
         this.source = source;

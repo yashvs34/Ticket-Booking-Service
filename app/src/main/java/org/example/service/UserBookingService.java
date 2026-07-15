@@ -2,8 +2,6 @@ package org.example.service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.example.entities.Ticket;
-import org.example.entities.Train;
 import org.example.entities.User;
 
 import java.io.File;
@@ -29,7 +27,8 @@ public class UserBookingService {
 
     public Boolean loginUser(User user) {
         Optional<User> foundUser = userList.stream().filter(u ->
-                        Objects.equals(u.getUserId(), user.getUserId()) && Objects.equals(u.getPassword(), user.getPassword()))
+                        Objects.equals(u.getUserId(), user.getUserId()) && Objects.equals(u.getPassword(),
+                                user.getPassword()))
                 .findFirst();
         if (foundUser.isEmpty()) {
             System.out.println("User '" + user.getUserId() + "' not found.");
