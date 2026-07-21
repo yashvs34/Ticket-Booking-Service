@@ -17,8 +17,4 @@ public class TrainRepositoryLayer {
 //    public User getTrainFromDB(String trainId) {
 //
 //    }
-//
-//    public boolean updateTrain(Train train) {
-//
-//    }
 }

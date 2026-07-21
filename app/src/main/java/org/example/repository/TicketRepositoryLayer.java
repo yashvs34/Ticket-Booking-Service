@@ -17,9 +17,4 @@ public class TicketRepositoryLayer {
 //    public User getTicketFromDB(String ticketId) {
 //
 //    }
-
-    public boolean updateTicket(Ticket ticket) {
-        // only boarding station can be changed
-        return false;
-    }
 }
