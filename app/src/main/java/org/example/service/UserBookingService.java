@@ -10,14 +10,13 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+import static org.example.constants.RepositoryConstants.USERS_PATH;
+
 public class UserBookingService {
-    private User user;
-    private List<User> userList;
+    private final User user;
+    private final List<User> userList;
 
     private final ObjectMapper objectMapper = new ObjectMapper();
-
-    private static final String USERS_PATH = "../database/users.json";
-    private static final String TRAINS_PATH = "../database/trains.json";
 
     private UserBookingService(User user) throws IOException {
         this.user = user;
