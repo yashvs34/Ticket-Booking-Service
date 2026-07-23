@@ -35,6 +35,14 @@ public class TicketRepositoryLayer {
         return false;
     }
 
+    public static boolean deleteTicket(Ticket ticket) {
+        if(!ticketsList.contains(ticket)) {
+            System.out.println("No ticket found");
+        }
+
+        return ticketsList.remove(ticket);
+    }
+
     public static List<Ticket> getAllTicketsFromDB() {
         return ticketsList;
     }

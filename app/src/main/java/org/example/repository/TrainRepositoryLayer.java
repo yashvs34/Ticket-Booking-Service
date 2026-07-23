@@ -55,4 +55,56 @@ public class TrainRepositoryLayer {
         }
         return train;
     }
+
+    public static boolean reserveSeat(String trainId) {
+        Optional<Train> isTrain = trainsList.stream().filter(t -> t.getTrainId().equals(trainId)).findFirst();
+        if (isTrain.isEmpty()) {
+            System.out.println("No train found with given ID");
+            return false;
+        }
+
+        Train train = isTrain.get();
+
+        List<List<Boolean>> seats = train.getSeats();
+        for (List<Boolean> s : seats) {
+            for (Boolean t : s) {
+                if (!t) {
+                    t = true;
+                    trainsList.remove(train);
+                    train.setSeats(seats);
+                    trainsList.add(train);
+                    return true;
+                }
+            }
+        }
+
+        System.out.println("No empty seat found");
+        return false;
+    }
+
+    public static boolean clearSeat(String trainId) {
+        Optional<Train> isTrain = trainsList.stream().filter(t -> t.getTrainId().equals(trainId)).findFirst();
+        if (isTrain.isEmpty()) {
+            System.out.println("No train found with given ID");
+            return false;
+        }
+
+        Train train = isTrain.get();
+
+        List<List<Boolean>> seats = train.getSeats();
+        for (List<Boolean> s : seats) {
+            for (Boolean t : s) {
+                if (t) {
+                    t = false;
+                    trainsList.remove(train);
+                    train.setSeats(seats);
+                    trainsList.add(train);
+                    return true;
+                }
+            }
+        }
+
+        System.out.println("No occupied seat found");
+        return false;
+    }
 }
