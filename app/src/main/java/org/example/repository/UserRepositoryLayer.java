@@ -7,6 +7,7 @@ import org.example.entities.User;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import static org.example.constants.RepositoryConstants.USERS_PATH;
@@ -49,10 +50,25 @@ public class UserRepositoryLayer {
     }
 
     public static Optional<User> getUserFromDB(String userId) {
-        Optional<User> user = usersList.stream().filter(u -> u.getUserId().equals(userId)).findFirst();
-        if (user.isEmpty()) {
-            System.out.println("No user present with this userId");
+        return usersList.stream().filter(u -> u.getUserId().equals(userId)).findFirst();
+    }
+
+    public static boolean updateUser(User user) {
+        Optional<User> user1 = usersList
+                .stream()
+                .filter(u -> !Objects.equals(u.getUserId(), user.getUserId())).findFirst();
+        if (user1.isEmpty()) {
+            System.out.println("No user found with given ID");
+            return false;
         }
-        return user;
+        usersList.remove(user1.get());
+        usersList.add(user);
+        try {
+            objectMapper.writeValue(users, usersList);
+            return true;
+        } catch (IOException e) {
+            System.out.println("IOException while writing users");
+        }
+        return false;
     }
 }

@@ -1,34 +1,25 @@
 package org.example.service;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import org.example.entities.Ticket;
 import org.example.entities.User;
+import org.example.repository.TicketRepositoryLayer;
+import org.example.repository.TrainRepositoryLayer;
+import org.example.repository.UserRepositoryLayer;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
-
-import static org.example.constants.RepositoryConstants.USERS_PATH;
+import java.util.UUID;
 
 public class UserBookingService {
     private final User user;
-    private final List<User> userList;
-
-    private final ObjectMapper objectMapper = new ObjectMapper();
 
     private UserBookingService(User user) throws IOException {
         this.user = user;
-        File users = new File(USERS_PATH);
-        userList = objectMapper.readValue(users, new TypeReference<List<User>>() {});
     }
 
     public Boolean loginUser(User user) {
-        Optional<User> foundUser = userList.stream().filter(u ->
-                        Objects.equals(u.getUserId(), user.getUserId()) && Objects.equals(u.getPassword(),
-                                user.getPassword()))
-                .findFirst();
+        Optional<User> foundUser = UserRepositoryLayer.getUserFromDB(user.getUserId());
         if (foundUser.isEmpty()) {
             System.out.println("User '" + user.getUserId() + "' not found.");
         }
@@ -36,31 +27,44 @@ public class UserBookingService {
     }
 
     public boolean signupUser(User user) {
-        if (userList.contains(user)) {
-            System.out.println("User '" + user.getUserId() + "' is already present");
+        final String userId = user.getUserId();
+        if (UserRepositoryLayer.getUserFromDB(userId).isPresent()) {
+            System.out.println("User '" + userId + "' is already present");
             return false;
         }
 
-        userList.add(user);
-        File usersList = new File(USERS_PATH);
-        try {
-            objectMapper.writeValue(usersList, usersList);
-        } catch (IOException exception) {
-            return false;
-        }
-        return true;
+        return UserRepositoryLayer.saveUserToDB(user);
     }
 
     public void fetchBookings() {
-        List<String> tickets = user.getBookedTickets();
+        List<Ticket> tickets = user.getBookedTickets().stream()
+                .map(TicketRepositoryLayer::getTicketFromDB)
+                .flatMap(Optional::stream)
+                .toList();
         System.out.println(tickets);
     }
 
-//    public boolean cancelBooking(String ticketId) {
-//
-//    }
-//
-//    public boolean bookTicket(String source, String destination, String trainId) {
-//
-//    }
+    public boolean cancelBooking(String ticketId) {
+        Optional<Ticket> ticket = TicketRepositoryLayer.getTicketFromDB(ticketId);
+        if (ticket.isPresent()) {
+            String trainId = ticket.get().getTrainId();
+            TicketRepositoryLayer.deleteTicket(ticket.get());
+            TrainRepositoryLayer.clearSeat(trainId);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean bookTicket(String source, String destination, String dateOfTravel, String trainId) {
+        String ticketId = UUID.randomUUID().toString();
+        // create object and fill details
+        Ticket newTicket = new Ticket(ticketId, user.getUserId(), source, destination, dateOfTravel, trainId);
+
+        List<String> bookedTickets = user.getBookedTickets();
+        bookedTickets.add(ticketId);
+        user.setBookedTickets(bookedTickets);
+        UserRepositoryLayer.updateUser(user);
+        TrainRepositoryLayer.reserveSeat(trainId);
+        return true;
+    }
 }
