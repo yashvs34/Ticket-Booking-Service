@@ -1,5 +1,6 @@
 package org.example.service;
 
+import org.example.constants.ServiceConstants;
 import org.example.entities.Ticket;
 import org.example.entities.User;
 import org.example.repository.TicketRepositoryLayer;
@@ -7,6 +8,9 @@ import org.example.repository.TrainRepositoryLayer;
 import org.example.repository.UserRepositoryLayer;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -57,8 +61,8 @@ public class UserBookingService {
 
     public boolean bookTicket(String source, String destination, String dateOfTravel, String trainId) {
         String ticketId = UUID.randomUUID().toString();
-        // create object and fill details
-        Ticket newTicket = new Ticket(ticketId, user.getUserId(), source, destination, dateOfTravel, trainId);
+        LocalDateTime dateTime = LocalDateTime.parse(dateOfTravel, ServiceConstants.FORMATTER);
+        Ticket newTicket = new Ticket(ticketId, user.getUserId(), source, destination, dateTime, trainId);
 
         List<String> bookedTickets = user.getBookedTickets();
         bookedTickets.add(ticketId);
