@@ -50,9 +50,6 @@ public class TrainRepositoryLayer {
 
     public static Optional<Train> getTrainFromDB(String trainId) {
         Optional<Train> train = trainsList.stream().filter(u -> u.getTrainId().equals(trainId)).findFirst();
-        if (train.isEmpty()) {
-            System.out.println("No train present with this trainId");
-        }
         return train;
     }
 

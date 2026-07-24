@@ -51,8 +51,7 @@ public class UserBookingService {
         if (ticket.isPresent()) {
             String trainId = ticket.get().getTrainId();
             TicketRepositoryLayer.deleteTicket(ticket.get());
-            TrainRepositoryLayer.clearSeat(trainId);
-            return true;
+            return TrainRepositoryLayer.clearSeat(trainId);
         }
         return false;
     }
