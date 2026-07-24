@@ -1,20 +1,20 @@
 package org.example.entities;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class Ticket {
     private String ticketId;
     private String userId;
     private String source;
     private String destination;
-    private Date dateOfTravel;
+    private LocalDateTime dateOfTravel;
     private String trainId;
 
     public Ticket(String ticketId,
                   String userId,
                   String source,
                   String destination,
-                  Date dateOfTravel,
+                  LocalDateTime dateOfTravel,
                   String trainId) {
         this.ticketId = ticketId;
         this.userId = userId;
@@ -28,13 +28,13 @@ public class Ticket {
     public String getUserId() {return userId;}
     public String getSource() {return source;}
     public String getDestination() {return destination;}
-    public Date getDateOfTravel() {return dateOfTravel;}
+    public LocalDateTime getDateOfTravel() {return dateOfTravel;}
     public String getTrainId() {return trainId;}
 
     public void setTicketId(String ticketId) {this.ticketId = ticketId;}
     public void setUserId(String userId) {this.userId = userId;}
     public void setSource(String source) {this.source = source;}
     public void setDestination(String destination) {this.destination = destination;}
-    public void setDateOfTravel(Date dateOfTravel) {this.dateOfTravel = dateOfTravel;}
+    public void setDateOfTravel(LocalDateTime dateOfTravel) {this.dateOfTravel = dateOfTravel;}
     public void setTrainId(String trainId) {this.trainId = trainId;}
 }
