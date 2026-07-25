@@ -9,6 +9,10 @@ public class User {
     private boolean isAdmin;
     private List<String> bookedTickets;
 
+    public User(){
+
+    }
+
     public User(String userId, String name, String password, boolean isAdmin, List<String> bookedTickets) {
         this.userId = userId;
         this.name = name;

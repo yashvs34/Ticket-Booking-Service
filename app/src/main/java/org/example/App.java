@@ -3,12 +3,128 @@
  */
 package org.example;
 
+import org.example.constants.ApplicationConstants;
+import org.example.entities.User;
+import org.example.repository.UserRepositoryLayer;
+import org.example.service.UserBookingService;
+
+import java.util.*;
+
 public class App {
-    public String getGreeting() {
-        return "Hello World!";
-    }
-
     public static void main(String[] args) {
+        System.out.println("Welcome to Ticket Booking Service :) !");
+        int n = 0;
 
+        Scanner s = new Scanner(System.in);
+
+        while (n != 8) {
+            System.out.println("Click the number according to your need :-");
+            System.out.println("1. Signup");
+            System.out.println("2. Log in");
+            System.out.println("3. Book Ticket");
+            System.out.println("4. View all Trains");
+            System.out.println("5. Show available seats in a train");
+            System.out.println("6. Show all bookings");
+            System.out.println("7. Cancel Booking");
+            System.out.println("8. Exit");
+
+            n = s.nextInt();
+            s.nextLine();
+
+            UserBookingService userBookingService = new UserBookingService();
+
+            switch (n) {
+                case 1:
+                    String userId;
+                    while(true) {
+                        System.out.print("Enter your userId: ");
+                        userId = s.nextLine();
+                        if (UserRepositoryLayer.getUserFromDB(userId).isEmpty()) {
+                            break;
+                        }
+                        System.out.println("\n----------------------------------------");
+                        System.out.println("UserId: '" + userId + "' is already taken!");
+                        System.out.println("----------------------------------------");
+                    }
+                    System.out.print("Enter your full name: ");
+                    String name = s.nextLine();
+                    System.out.print("Enter password for your account: ");
+                    String password = s.nextLine();
+                    Boolean isAdmin = false;
+                    System.out.print("Do you want to become an admin?     1. YES     2. NO     ");
+                    int ans = s.nextInt();
+                    s.nextLine();
+                    while (ans == 1) {
+                        System.out.print("Enter secret code for creating admin account: ");
+                        String adminPassword = s.nextLine();
+                        if (Objects.equals(adminPassword, ApplicationConstants.ADMIN_PASSWORD)) {
+                            isAdmin = true;
+                            break;
+                        }
+                        System.out.print("Wrong code. Do you want to enter again or proceed creating a simple " +
+                                "account?     1.Simple Account     2.Again Enter Password      ");
+                        int isAgain = s.nextInt();
+                        s.nextLine();
+                        if (isAgain == 1) {
+                            break;
+                        }
+                    }
+                    List<String> bookedTickets = new ArrayList<>();
+                    User user = new User(userId, name, password, isAdmin, bookedTickets);
+                    userBookingService.signupUser(user);
+                    System.out.println("\n----------------------------------------");
+                    System.out.println("      USER CREATED SUCCESSFULLY!");
+                    System.out.println("----------------------------------------");
+                    System.out.println("User ID       : " + user.getUserId());
+                    System.out.println("Name          : " + user.getName());
+                    System.out.println("Admin Account : " + (user.getIsAdmin() ? "Yes" : "No"));
+                    System.out.println("Booked Tickets: " + user.getBookedTickets());
+                    System.out.println("----------------------------------------\n");
+                    System.out.println("Press ENTER to continue...");
+                    s.nextLine();
+                    break;
+                case 2:
+                    while (true) {
+                        System.out.print("Enter userId: ");
+                        userId = s.nextLine();
+                        System.out.print("Enter password: ");
+                        password = s.nextLine();
+                        if (userBookingService.loginUser(userId, password)) {
+                            System.out.println("\n----------------------------------------");
+                            System.out.println("          SUCCESSFULLY LOGGED IN          ");
+                            System.out.println("----------------------------------------\n");
+                            System.out.println("Press ENTER to continue...");
+                            break;
+                        }
+                        System.out.print("Do you want to enter your credentials again?      1.YES     2.NO     ");
+                        ans = s.nextInt();
+                        if (ans == 2) {
+                            break;
+                        }
+                    }
+                    break;
+                case 3:
+                    System.out.print("Enter the source station: ");
+                    String source = s.nextLine();
+                    System.out.print("Enter the destination station: ");
+                    String destination = s.nextLine();
+                    System.out.print("Enter the date and time of travel in following format - YYYY-MM-DD HH:mm:ss :-  ");
+                    String dateOfTravel = s.nextLine();
+                    System.out.print("Enter the trainId: ");
+                    String trainId = s.nextLine();
+                    userBookingService.bookTicket(source, destination, dateOfTravel, trainId);
+                    break;
+                case 4:
+                    break;
+                case 5:
+                    break;
+                case 6:
+                    break;
+                case 7:
+                    break;
+            }
+        }
+
+        System.out.println("Thanks for using the service");
     }
 }

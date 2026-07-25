@@ -1,7 +1,1 @@
-[{
-  "userId": "yashvvs",
-  "name": "Yashvardhan Singh",
-  "password": "abc123",
-  "isAdmin": false,
-  "bookedTickets": ["ticket1", "ticket2"]
-}]
+[{"userId":"yashvs34","name":"Yashvardhan Singh","password":"yash123","isAdmin":false,"bookedTickets":[]},{"userId":"yash","name":"Yashvardhan Singh","password":"yash123","isAdmin":true,"bookedTickets":[]}]

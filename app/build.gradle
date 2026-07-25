@@ -37,6 +37,10 @@ application {
     mainClass = 'org.example.App'
 }
 
+run {
+    standardInput = System.in
+}
+
 checkstyle {
     toolVersion = "10.12.0"
     configFile = file("${project.rootDir}/config/checkstyle/checkstyle.xml")
