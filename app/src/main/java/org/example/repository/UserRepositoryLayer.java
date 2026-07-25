@@ -6,6 +6,7 @@ import org.example.entities.User;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -14,14 +15,14 @@ import static org.example.constants.RepositoryConstants.USERS_PATH;
 
 public class UserRepositoryLayer {
     private static final ObjectMapper objectMapper = new ObjectMapper();
-    private static List<User> usersList;
+    private static List<User> usersList = new ArrayList<>();
     private static final File users = new File(USERS_PATH);
 
     static {
         try{
             usersList = objectMapper.readValue(users, new TypeReference<List<User>>() {});
         } catch (IOException e) {
-            System.out.println("IOException while reading users");
+            System.out.println("IOException while reading users: " + e);
         }
     }
 

@@ -5,6 +5,7 @@ import org.example.entities.Ticket;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,7 +13,7 @@ import static org.example.constants.RepositoryConstants.TICKETS_PATH;
 
 public class TicketRepositoryLayer {
     private static final ObjectMapper objectMapper = new ObjectMapper();
-    private static List<Ticket> ticketsList;
+    private static List<Ticket> ticketsList = new ArrayList<>();
     private static final File tickets = new File(TICKETS_PATH);
 
     private static boolean saveTicket(Ticket ticket) throws IOException {

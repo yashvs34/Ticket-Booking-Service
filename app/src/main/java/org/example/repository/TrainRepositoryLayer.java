@@ -6,6 +6,7 @@ import org.example.entities.Train;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,7 +14,7 @@ import static org.example.constants.RepositoryConstants.TRAINS_PATH;
 
 public class TrainRepositoryLayer {
     private static final ObjectMapper objectMapper = new ObjectMapper();
-    private static List<Train> trainsList;
+    private static List<Train> trainsList = new ArrayList<>();
     private static final File trains = new File(TRAINS_PATH);
 
     static {

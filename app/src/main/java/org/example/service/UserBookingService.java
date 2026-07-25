@@ -7,24 +7,24 @@ import org.example.repository.TicketRepositoryLayer;
 import org.example.repository.TrainRepositoryLayer;
 import org.example.repository.UserRepositoryLayer;
 
-import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
 public class UserBookingService {
-    private final User user;
+    private User user;
 
-    private UserBookingService(User user) throws IOException {
-        this.user = user;
-    }
-
-    public Boolean loginUser(User user) {
-        Optional<User> foundUser = UserRepositoryLayer.getUserFromDB(user.getUserId());
+    public Boolean loginUser(String userId, String password) {
+        Optional<User> foundUser = UserRepositoryLayer.getUserFromDB(userId);
         if (foundUser.isEmpty()) {
-            System.out.println("User '" + user.getUserId() + "' not found.");
+            System.out.println("User '" + userId + "' not found.");
+        } else if (!Objects.equals(foundUser.get().getPassword(), password)) {
+            System.out.println("Password for the userId " + userId + " is incorrect");
+            return false;
         }
+        this.user = foundUser.orElse(null);
         return foundUser.isPresent();
     }
 
