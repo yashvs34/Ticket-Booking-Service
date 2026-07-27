@@ -4,7 +4,9 @@
 package org.example;
 
 import org.example.constants.ApplicationConstants;
+import org.example.entities.Train;
 import org.example.entities.User;
+import org.example.repository.TrainRepositoryLayer;
 import org.example.repository.UserRepositoryLayer;
 import org.example.service.UserBookingService;
 
@@ -112,15 +114,47 @@ public class App {
                     String dateOfTravel = s.nextLine();
                     System.out.print("Enter the trainId: ");
                     String trainId = s.nextLine();
-                    userBookingService.bookTicket(source, destination, dateOfTravel, trainId);
+                    if(userBookingService.bookTicket(source, destination, dateOfTravel, trainId)) {
+                        System.out.println("\n----------------------------------------");
+                        System.out.println("        TICKET BOOKED SUCCESSFULLY          ");
+                        System.out.println("----------------------------------------\n");
+                    } else {
+                        System.out.println("\n----------------------------------------");
+                        System.out.println("         ERROR WHILE BOOKING TICKET          ");
+                        System.out.println("----------------------------------------\n");
+                    }
                     break;
                 case 4:
+                    System.out.println(TrainRepositoryLayer.getAllTrainsFromDB());
                     break;
                 case 5:
+                    while (true) {
+                        System.out.print("Enter trainId: ");
+                        trainId = s.nextLine();
+                        Optional<Train> isTrainPresent = TrainRepositoryLayer.getTrainFromDB(trainId);
+                        if (isTrainPresent.isEmpty()) {
+                            System.out.println("\n----------------------------------------");
+                            System.out.println("        NO TRAIN EXISTS WITH GIVEN ID          ");
+                            System.out.println("----------------------------------------\n");
+                            System.out.println("Do you want to enter trainId again?     1.YES     2.NO");
+                            ans = s.nextInt();
+                            s.nextLine();
+                            if (ans == 2) {
+                                break;
+                            }
+                        } else {
+                            Train train = isTrainPresent.get();
+                            System.out.println(train.getSeats());
+                            break;
+                        }
+                    }
                     break;
                 case 6:
+//                    show all bookings
+                    UserRepositoryLayer.getUserFromDB(user.getUserId());
                     break;
                 case 7:
+//                    cancelbooking
                     break;
             }
         }

@@ -61,11 +61,18 @@ public class UserBookingService {
         LocalDateTime dateTime = LocalDateTime.parse(dateOfTravel, ServiceConstants.FORMATTER);
         Ticket newTicket = new Ticket(ticketId, user.getUserId(), source, destination, dateTime, trainId);
 
+        if(!TicketRepositoryLayer.saveTicketToDB(newTicket)) {
+            return false;
+        }
         List<String> bookedTickets = user.getBookedTickets();
         bookedTickets.add(ticketId);
         user.setBookedTickets(bookedTickets);
-        UserRepositoryLayer.updateUser(user);
-        TrainRepositoryLayer.reserveSeat(trainId);
+        if(!UserRepositoryLayer.updateUser(user)) {
+            return false;
+        }
+        if(!TrainRepositoryLayer.reserveSeat(trainId)) {
+            return false;
+        }
         return true;
     }
 }
